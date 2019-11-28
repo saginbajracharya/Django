@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}
+    Home
+{% endblock %}
+{% block content %}
+    <button type="submit" class="btn btn-success">
+        <a href="{% url 'polls:new_post' %}">Add Question</a>
+    </button>
+    <br><br>
+    {% if questions %}
+    <div class="container">
+        <table style="width: 100%; text-align: center;">
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Published Date</th>
+                <th>Action</th>
+            </tr>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.question_text }}</td>
+                <td>{{ question.pub_date }}</td>
+                <td style="width:30%">
+                    <button type="submit" class="btn btn-success">
+                        <a href="{% url 'polls:vote' question.id %}">Vote</a>
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <a href="{% url 'polls:edit' question.id %}">Edit</a>
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <a href="{% url 'polls:delete' question.id %}">Delete</a>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+        <p>No pollsss are available.</p>
+    {% endif %}
+{% endblock %}
